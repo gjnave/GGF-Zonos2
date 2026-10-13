@@ -1,0 +1,14 @@
+/models/
+/outputs/
+/downloads/
+/runtime/
+/cuda/
+/tools/*.exe
+*.partial
+*.zip
+*.log
+*.dll
+*.exe
+*.gguf
+.env
+.venv/
