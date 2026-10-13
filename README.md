@@ -1,30 +1,29 @@
-# GGF Zonos2 - pre-release source backup
+# GGF Zonos2
 
-This is the development source backup for the native Windows Zonos2 app being prepared by Get Going Fast. **It is not a validated member installer release.**
+Create speech from text, clone a reference voice, blend voices and adjust expression in a simple GGF interface. The PC performs inference; a phone can control it through the same app.
 
-The browser UI supports text-to-speech, reference-audio voice cloning, two-voice blending, emotion controls, Light/Dark appearance, and streaming playback. Local inference uses official Zyphra/zonos2.cpp with the official ZONOS2 GGUF Q6_K, DAC and speaker-encoder models. The PC performs inference; a temporary HTTPS tunnel lets a phone control the same server.
+## Install and run
 
-## Release status
+Extract the small installer ZIP into a writable folder on your internal drive. Double-click install.bat, then run.bat. The installer downloads application source (Codeberg first, GitHub fallback), a separate hash-verified native engine release, UV-managed Windows x64 Python 3.11, dependencies and the official Q6_K, DAC and speaker-encoder models. System Python is not used. Models and environments are not included in the ZIP. Allow at least 12 GB free. Installation does not install an NVIDIA driver or CUDA toolkit; complete normal PC setup first.
 
-- The development CUDA runtime passed generation/content checks on RTX 4090.
-- Runtime binaries and models are deliberately excluded from this source repository.
-- The included `install.bat` is the earlier evaluation downloader. Until the release runtime is published, it downloads the official Vulkan archive and `run.bat` defaults to CPU when the custom CUDA binary is absent. **Do not distribute this as the tested CUDA member package.**
-- A portable AVX2 CPU baseline and CUDA 86/89 targets are being built separately. Other GPU hardware is unverified.
-- The native runtime repository currently has no declared project license. Redistribution clarification is pending; the model card's Apache-2.0 declaration is not assigned to the C++ code or its browser UI.
-- Native runtime licensing must be clarified before making this source backup public or publishing the modified upstream UI and compiled runtime.
+The default UI is http://127.0.0.1:7865 with occupied-port fallback. Native inference is a hidden app-owned loopback process that loads only when you generate. This is not ComfyUI, WSL or PyTorch inference. Native Windows CUDA and CPU builds use an AVX2 CPU baseline. CUDA was tested on RTX 4090 only; other GPU hardware is unverified. For CPU mode, set ZONOS2_BACKEND=cpu before running.
 
-## Planned member install and update flow
+## Use from your phone
 
-The small member ZIP will contain one CMD installer, thin run launchers, disclaimer, about and README. The installer downloads individual application files through Codeberg (primary), GitHub (mirror), then a verified Drive fallback. Repository hosts generate their archives automatically; no manually maintained source ZIP belongs in a repository. Compiled runtime assets will be separate, versioned release downloads with pinned digests. Models are downloaded directly from their official publisher with resume and SHA256 checks.
+Open Settings → Use from your phone / network access. Choose Local network (same LAN) or Temporary public link. Enter an optional username/password; blank password means no login. Save, then use Restart app / apply saved settings. Return to Settings to copy the current phone address. Your PC must stay on. Local access always remains login-free; remote authentication uses a separate Gradio address. Passwords are stored only as salted hashes. Public links change on restart and anyone with an unauthenticated link can use the app and Settings. LAN access may require Windows Firewall permission. There is no separate phone launcher.
 
-## Development preview
+## Create
 
-### Windows environment setup
+Type or paste the words to speak. Choose a preset, or upload/record a reference voice you have permission to use. Expression sliders stay in their own open panel immediately above Generate; technical controls are in the collapsed Parameters panel. Generate creates a unique WAV in outputs. Long scripts are chunked without a total-duration cap. If a chunk reaches its selected native token limit, the result warns about possible cutoff. Stop generation releases the owned engine. Release models in Settings frees GPU memory while keeping the UI and phone link open; next generation reloads automatically. Stop server requires confirmation and requires a local-PC restart afterward.
 
-`install.bat` now bootstraps hash-verified uv 0.12.24 and creates an app-local managed 64-bit Python 3.11 environment. It installs pinned requirements through uv and runs dependency checks. `/dependencies-only` tests this phase without downloading the engine/models. The small Python launcher passes the environment's CUDA runtime/cuBLAS DLL directories and packaged FFmpeg decoder to the unchanged native C++ engine. It does not use PyTorch, change the speech engine, install a CUDA toolkit/compiler, install a driver, or rely on global Python. The user's NVIDIA/CUDA PC setup remains their responsibility.
+Uploads, controls and results are kept in a browser-token workspace on disk, so reopening the same browser origin restores them. New public URLs are different origins; browser-local workspace identifiers do not automatically transfer to a new URL. Light/Dark appearance is remembered on each device.
 
-For an already provisioned local development installation, `run.bat` selects its app-local CUDA runtime, or CPU mode if absent. `run-phone.bat` starts the server if needed, verifies a pinned Cloudflare tunnel helper and prints a temporary HTTPS link. This preview has no authentication: anyone with the link can use generation/voice upload. Close the tunnel to end phone access; close the separate model-server console to free GPU memory. Never commit temporary URLs or private reference media.
+## Updates and publication
 
-## Release handoff
+Settings checks repository revisions and stages host-generated repository archives before copying source. Existing files are backed up; installed models, environments, private settings, outputs and native binaries are preserved. Dependency updates use UV. Ordinary UI/source updates do not rebuild the native engine release.
 
-Keep app models, outputs, voice references, private settings and environments outside source updates. Back up an existing member ZIP before replacing it. Verify installation into a new folder and check real generated speech, not just HTTP 200 or valid WAV headers. Preserve existing working installations. Use native CMD installer logic; no PowerShell installer or globally installed Python dependency is required for this C++ runtime.
+Application source is published as individual files in https://github.com/gjnave/GGF-Zonos2 . The bootstrap tries Codeberg first and falls back to GitHub if unavailable. Native binaries are downloaded as a separately versioned GitHub release asset; they are not bundled in the small member installer ZIP. No verified Drive fallback is configured; do not claim one.
+
+## Notices
+
+Keep licenses/ and THIRD-PARTY-NOTICES.md with the downloaded application. Published upstream license texts are retained without assigning a model/Python license to the separate native C++ project. The installer retains the user's original about.nfo and disclaimer.md unchanged; its legacy WSL description refers to the prior bundle, not this native app.

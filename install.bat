@@ -2,9 +2,9 @@
 setlocal EnableExtensions DisableDelayedExpansion
 cd /d "%~dp0"
 echo ZONOS2 Windows setup - app-local uv and Python 3.11.
-echo run.bat uses CPU mode unless the separately validated local CUDA runtime is present.
+echo run.bat uses the included NVIDIA CUDA engine; CPU mode is optional.
 echo No system Python is required. No CUDA toolkit or NVIDIA driver is installed by this setup.
-echo Downloads official runtime and Q6_K, vocoder and speaker models into this folder.
+echo Downloads Q6_K, vocoder and speaker models into this folder.
 call :SETUP_ENVIRONMENT
 if errorlevel 1 goto failed
 if /i "%~1"=="/dependencies-only" exit /b 0
@@ -13,12 +13,10 @@ if not exist "zonos2" mkdir "zonos2"
 if not exist "zonos2\models" mkdir "zonos2\models"
 if not exist "zonos2\default_voices" mkdir "zonos2\default_voices"
 if not exist "outputs" mkdir "outputs"
-call :fetch "downloads\zonos2-windows-x64-vulkan-v0.5.2.zip" "https://github.com/Zyphra/zonos2.cpp/releases/download/v0.5.2/zonos2-windows-x64-vulkan.zip" "e89fb7396e3960ae0961f5a737ed0f988e16d3dece79618d35920cc916cc943c"
-if errorlevel 1 goto failed
-if exist "zonos2\zonos2-server.exe" goto models
-tar.exe -xf "downloads\zonos2-windows-x64-vulkan-v0.5.2.zip" -C "%~dp0zonos2"
-if errorlevel 1 goto failed
 if not exist "zonos2\zonos2-server.exe" goto failed
+if not exist "zonos2\cuda\zonos2-server.exe" goto failed
+if not exist "zonos2\web\tts_ui.html" goto failed
+if not exist "app.py" goto failed
 :models
 call :fetch "zonos2\models\zonos2-q6_k.gguf" "https://huggingface.co/Zyphra/ZONOS2-GGUF/resolve/75c877ec8ac86dda42bfc0e9968c87f29e10ef57/zonos2-q6_k.gguf?download=true" "349175207ce6521d4e89e2317f7862c68d15b8ee5ad876c1c3ce2938dc5c7e86"
 if errorlevel 1 goto failed
@@ -26,7 +24,7 @@ call :fetch "zonos2\models\dac.gguf" "https://huggingface.co/Zyphra/ZONOS2-GGUF/
 if errorlevel 1 goto failed
 call :fetch "zonos2\models\spk-encoder.gguf" "https://huggingface.co/Zyphra/ZONOS2-GGUF/resolve/75c877ec8ac86dda42bfc0e9968c87f29e10ef57/spk-encoder.gguf?download=true" "284849980047a811e2c2a13ce7527c8a6a286021df152e5325533d783240eb6d"
 if errorlevel 1 goto failed
-echo Setup complete. Run run.bat for the native Windows browser UI.
+echo Setup complete. Run run.bat. Phone access is built into the Settings tab.
 echo Reference-audio decoding is provided by the app-local Python dependencies.
 exit /b 0
 :fetch
@@ -90,6 +88,10 @@ echo This does NOT install the CUDA toolkit, compiler, or NVIDIA driver.
 "%UV%" pip install --python "%ZONOS_ENV_TARGET%\Scripts\python.exe" -r "%~dp0requirements.txt"
 if errorlevel 1 goto environment_failed
 "%UV%" pip check --python "%ZONOS_ENV_TARGET%\Scripts\python.exe"
+if errorlevel 1 goto environment_failed
+"%ZONOS_ENV_TARGET%\Scripts\python.exe" -c "import gradio, numpy, pandas, psutil, requests, imageio_ffmpeg"
+if errorlevel 1 goto environment_failed
+"%ZONOS_ENV_TARGET%\Scripts\python.exe" -c "import app; app.theme().to_dict(); app.build_demo()"
 if errorlevel 1 goto environment_failed
 "%ZONOS_ENV_TARGET%\Scripts\python.exe" "%~dp0launch-native.py" --check-environment
 exit /b %ERRORLEVEL%

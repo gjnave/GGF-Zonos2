@@ -15,3 +15,11 @@
 /installer-cache/
 __pycache__/
 /setup-environment.bat
+/zonos2/
+/jobs/
+/logs/
+/.gradio/
+/network_settings.json
+/local_settings.json
+/app.lock
+/.installed-revision.json
