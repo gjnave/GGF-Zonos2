@@ -19,6 +19,10 @@ The small member ZIP will contain one CMD installer, thin run launchers, disclai
 
 ## Development preview
 
+### Windows environment setup
+
+`install.bat` now bootstraps hash-verified uv 0.12.24 and creates an app-local managed 64-bit Python 3.11 environment. It installs pinned requirements through uv and runs dependency checks. `/dependencies-only` tests this phase without downloading the engine/models. The small Python launcher passes the environment's CUDA runtime/cuBLAS DLL directories and packaged FFmpeg decoder to the unchanged native C++ engine. It does not use PyTorch, change the speech engine, install a CUDA toolkit/compiler, install a driver, or rely on global Python. The user's NVIDIA/CUDA PC setup remains their responsibility.
+
 For an already provisioned local development installation, `run.bat` selects its app-local CUDA runtime, or CPU mode if absent. `run-phone.bat` starts the server if needed, verifies a pinned Cloudflare tunnel helper and prints a temporary HTTPS link. This preview has no authentication: anyone with the link can use generation/voice upload. Close the tunnel to end phone access; close the separate model-server console to free GPU memory. Never commit temporary URLs or private reference media.
 
 ## Release handoff

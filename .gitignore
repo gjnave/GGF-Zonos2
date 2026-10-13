@@ -12,3 +12,6 @@
 *.gguf
 .env
 .venv/
+/installer-cache/
+__pycache__/
+/setup-environment.bat

@@ -1,0 +1,4 @@
+requests==2.32.5
+imageio-ffmpeg==0.6.0
+nvidia-cuda-runtime-cu12==12.8.90
+nvidia-cublas-cu12==12.8.4.1
