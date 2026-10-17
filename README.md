@@ -29,18 +29,13 @@ These are the manual steps for this public repository. The separate member downl
    uv pip check --python .venv\Scripts\python.exe
    ```
 
-3. Download the [native Windows engine ZIP](https://github.com/gjnave/GGF-Zonos2/releases/tag/native-v0.5.2), `GGF-Zonos2-native-v0.5.2-windows-x64.zip`. Extract the ZIP into the `GGF-Zonos2` folder you cloned in step 1 (the folder containing `app.py`). **Move the ZIP's entire top-level `zonos2` folder, not the individual items shown inside it.** This puts its `cuda` folder, voices, DLLs, and EXE files together in the right place:
+3. Download the [native Windows engine ZIP](https://github.com/gjnave/GGF-Zonos2/releases/tag/native-v0.5.2), `GGF-Zonos2-native-v0.5.2-windows-x64.zip`. Extract its **entire `zonos2` folder** into the cloned `GGF-Zonos2` folder, beside `app.py`. Keep everything inside `zonos2` together; do not move the `cuda` folder, voices, DLLs, or EXE files separately. The result is:
 
    ```text
    GGF-Zonos2\app.py
-   GGF-Zonos2\web\tts_ui.html
    GGF-Zonos2\zonos2\zonos2-server.exe
    GGF-Zonos2\zonos2\cuda\zonos2-server.exe
    ```
-
-   **One additional file:** the ZIP does not contain `web\tts_ui.html`. That file is already in the cloned app folder at `GGF-Zonos2\web\tts_ui.html`. Make a `web` folder inside the extracted `GGF-Zonos2\zonos2` folder and copy `tts_ui.html` into it. The final path is `GGF-Zonos2\zonos2\web\tts_ui.html`. Do not move anything else out of the extracted `zonos2` folder.
-
-   Optional ZIP check from Command Prompt: `certutil -hashfile "GGF-Zonos2-native-v0.5.2-windows-x64.zip" SHA256` must show `52664AADF24CD18A5297A5BF616E4E010D707572ED4DEDBD99B3778AF8B6F559`. The separate member installer extracts the whole folder, copies this one HTML file, and checks the ZIP automatically.
 
 4. Download `zonos2-q6_k.gguf`, `dac.gguf`, and `spk-encoder.gguf` from the pinned [Zyphra ZONOS2-GGUF revision](https://huggingface.co/Zyphra/ZONOS2-GGUF/tree/75c877ec8ac86dda42bfc0e9968c87f29e10ef57) into `zonos2\models\`. Verify their SHA-256 hashes, respectively: `349175207ce6521d4e89e2317f7862c68d15b8ee5ad876c1c3ce2938dc5c7e86`, `b5330fc112cfac5e7bae511a5083915ce5028899de4d7a4193dcc5874063532c`, and `284849980047a811e2c2a13ce7527c8a6a286021df152e5325533d783240eb6d`. In Command Prompt, `certutil -hashfile PATH SHA256` checks one file.
 
