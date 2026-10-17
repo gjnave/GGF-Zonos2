@@ -90,6 +90,16 @@ class GGFParityTests(unittest.TestCase):
         self.assertIsNone(worker.process)
         self.assertTrue(worker.cancelled.is_set())
 
+    def test_native_web_ui_is_prepared_from_app_source(self):
+        with preserved_test_dir() as tmp:
+            root = Path(tmp)
+            source = root / "web" / "tts_ui.html"
+            source.parent.mkdir()
+            source.write_text("GGF UI", encoding="utf-8")
+            with patch.object(native_backend, "ROOT", root), patch.object(native_backend, "RUNTIME", root / "zonos2"):
+                native_backend.prepare_native_web_ui()
+            self.assertEqual((root / "zonos2" / "web" / "tts_ui.html").read_text(encoding="utf-8"), "GGF UI")
+
     def test_two_views_cannot_generate_concurrently(self):
         worker = native_backend.NativeBackend()
         worker.begin()
