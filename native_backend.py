@@ -6,7 +6,6 @@ import ctypes
 import os
 from pathlib import Path
 import runpy
-import shutil
 import socket
 import subprocess
 import threading
@@ -16,16 +15,6 @@ import requests
 
 ROOT = Path(__file__).resolve().parent
 RUNTIME = ROOT / "zonos2"
-
-
-def prepare_native_web_ui():
-    """Place the app's browser UI beside an extracted native engine."""
-    source = ROOT / "web" / "tts_ui.html"
-    if not source.is_file():
-        raise RuntimeError("App web UI is missing. Restore web/tts_ui.html from the source repository.")
-    destination = RUNTIME / "web" / "tts_ui.html"
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(source, destination)
 
 
 class NativeBackend:
@@ -88,7 +77,6 @@ class NativeBackend:
         for name in ("zonos2-q6_k.gguf", "dac.gguf", "spk-encoder.gguf"):
             if not (RUNTIME / "models" / name).is_file():
                 raise RuntimeError(f"Missing {name}. Run install.bat first.")
-        prepare_native_web_ui()
         if not cpu:
             try:
                 ctypes.WinDLL("nvcuda.dll")
