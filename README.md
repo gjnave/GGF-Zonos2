@@ -1,4 +1,12 @@
-# GGF Zonos2
+![Zonos 2 — Text to Speech](assets/zonos2-windows.png)
+
+# Zonos 2 (Windows)
+
+## A Get Going Fast Application
+
+### [Quick Setup Helper → GetGoingFast.pro/tools/zonos2-win](https://getgoingfast.pro/tools/zonos2-win/)
+
+The ready-to-run Windows installer is available to Get Going Fast members on the tool page above. This repository contains the application source, not the member installer ZIP or model weights.
 
 Create speech from text, clone a reference voice, blend voices and adjust expression in a simple GGF interface. The PC performs inference; a phone can control it through the same app.
 
@@ -22,7 +30,7 @@ Uploads, controls and results are kept in a browser-token workspace on disk, so 
 
 Settings checks repository revisions and stages host-generated repository archives before copying source. Existing files are backed up; installed models, environments, private settings, outputs and native binaries are preserved. Dependency updates use UV. Ordinary UI/source updates do not rebuild the native engine release.
 
-Application source is published as individual files in https://github.com/gjnave/GGF-Zonos2 . The bootstrap tries Codeberg first and falls back to GitHub if unavailable. Native binaries are downloaded as a separately versioned GitHub release asset; they are not bundled in the small member installer ZIP. No verified Drive fallback is configured; do not claim one.
+Application source is published as individual files on [Codeberg](https://codeberg.org/Cognibuild/GGF-Zonos2) and [GitHub](https://github.com/gjnave/GGF-Zonos2). The bootstrap tries Codeberg first and falls back to GitHub if unavailable. Native binaries are downloaded as a separately versioned GitHub release asset; they are not bundled in the small member installer ZIP. No verified Drive fallback is configured; do not claim one.
 
 ## Notices
 
