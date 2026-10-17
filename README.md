@@ -29,7 +29,13 @@ These are the manual steps for this public repository. The separate member downl
    uv pip check --python .venv\Scripts\python.exe
    ```
 
-3. Download the [native Windows engine release](https://github.com/gjnave/GGF-Zonos2/releases/tag/native-v0.5.2), `GGF-Zonos2-native-v0.5.2-windows-x64.zip`. Verify its SHA-256 is `52664aadf24cd18a5297a5bf616e4e010d707572ed4dedbd99b3778af8b6f559`, then extract it into the `GGF-Zonos2` repository folder from step 1. The engine ZIP contains a `zonos2` folder, **not** a `web` folder. The `web\tts_ui.html` file comes from the cloned app repository. While still in that repository folder in Command Prompt, run:
+3. Download the [native Windows engine release](https://github.com/gjnave/GGF-Zonos2/releases/tag/native-v0.5.2), `GGF-Zonos2-native-v0.5.2-windows-x64.zip`. While in the folder containing the downloaded ZIP, run this Command Prompt check (as added on Codeberg):
+
+   ```bat
+   certutil -hashfile "GGF-Zonos2-native-v0.5.2-windows-x64.zip" SHA256
+   ```
+
+   Its SHA-256 must match `52664aadf24cd18a5297a5bf616e4e010d707572ed4dedbd99b3778af8b6f559`. Then extract the ZIP into the `GGF-Zonos2` repository folder from step 1. The engine ZIP contains a `zonos2` folder, **not** a `web` folder. The `web\tts_ui.html` file comes from the cloned app repository. Back in that repository folder in Command Prompt, run:
 
    ```bat
    mkdir zonos2\web
