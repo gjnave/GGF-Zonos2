@@ -29,7 +29,10 @@ These are the manual steps for this public repository. The separate member downl
    uv pip check --python .venv\Scripts\python.exe
    ```
 
-3. Download the [native Windows engine release](https://github.com/gjnave/GGF-Zonos2/releases/tag/native-v0.5.2), `GGF-Zonos2-native-v0.5.2-windows-x64.zip`. Verify its SHA-256 is `52664aadf24cd18a5297a5bf616e4e010d707572ed4dedbd99b3778af8b6f559`, then extract it into this repository folder. Copy `web\tts_ui.html` to `zonos2\web\tts_ui.html`. The extracted tree must contain both `zonos2\zonos2-server.exe` and `zonos2\cuda\zonos2-server.exe`.
+3. Download the [native Windows engine release](https://github.com/gjnave/GGF-Zonos2/releases/tag/native-v0.5.2), `GGF-Zonos2-native-v0.5.2-windows-x64.zip`. Verify its SHA-256 is `52664aadf24cd18a5297a5bf616e4e010d707572ed4dedbd99b3778af8b6f559`, 
+certutil -hashfile "GGF-Zonos2-native-v0.5.2-windows-x64.zip" SHA256
+
+then extract it into this repository folder. Copy `web\tts_ui.html` to `zonos2\web\tts_ui.html`. The extracted tree must contain both `zonos2\zonos2-server.exe` and `zonos2\cuda\zonos2-server.exe`.
 
 4. Download `zonos2-q6_k.gguf`, `dac.gguf`, and `spk-encoder.gguf` from the pinned [Zyphra ZONOS2-GGUF revision](https://huggingface.co/Zyphra/ZONOS2-GGUF/tree/75c877ec8ac86dda42bfc0e9968c87f29e10ef57) into `zonos2\models\`. Verify their SHA-256 hashes, respectively: `349175207ce6521d4e89e2317f7862c68d15b8ee5ad876c1c3ce2938dc5c7e86`, `b5330fc112cfac5e7bae511a5083915ce5028899de4d7a4193dcc5874063532c`, and `284849980047a811e2c2a13ce7527c8a6a286021df152e5325533d783240eb6d`. In Command Prompt, `certutil -hashfile PATH SHA256` checks one file.
 
