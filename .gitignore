@@ -15,6 +15,7 @@
 /installer-cache/
 __pycache__/
 /setup-environment.bat
+/install.bat
 /zonos2/
 /jobs/
 /logs/
